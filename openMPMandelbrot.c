@@ -12,6 +12,7 @@
   */
  #include <stdio.h>
  #include <math.h>
+ #include <omp.h>
  int main()
  {
           /* screen ( integer) coordinate */
@@ -39,7 +40,7 @@
         double Zx2, Zy2; /* Zx2=Zx*Zx;  Zy2=Zy*Zy  */
         /*  */
         int Iteration;
-        const int IterationMax=200;
+        const int IterationMax=500;
         /* bail-out value , radius of circle ;  */
         const double EscapeRadius=2;
         double ER2=EscapeRadius*EscapeRadius;
@@ -48,11 +49,12 @@
         /*write ASCII header to the file*/
         //fprintf(fp,"P6\n %s\n %d\n %d\n %d\n",comment,iXmax,iYmax,MaxColorComponentValue);
         /* compute and write image data bytes to the file*/
-        for(iY=0;iY<iYmax;iY++)
+	#pragma omp parallel for private(color,Cx,Cy,Zx,Zy,Zx2,Zy2,Iteration)
+	for(iY=0;iY<iYmax;iY++)
         {
              Cy=CyMin + iY*PixelHeight;
-             if (fabs(Cy)< PixelHeight/2) Cy=0.0; /* Main antenna */
-             for(iX=0;iX<iXmax;iX++)
+             if (fabs(Cy)< PixelHeight/2) Cy=0.0; /* Main antenna */	
+	     for(iX=0;iX<iXmax;iX++)
              {         
                         Cx=CxMin + iX*PixelWidth;
                         /* initial value of orbit = critical point Z= 0 */
