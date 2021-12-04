@@ -39,7 +39,7 @@
         double Zx2, Zy2; /* Zx2=Zx*Zx;  Zy2=Zy*Zy  */
         /*  */
         int Iteration;
-        const int IterationMax=200;
+        const int IterationMax=500;
         /* bail-out value , radius of circle ;  */
         const double EscapeRadius=2;
         double ER2=EscapeRadius*EscapeRadius;
