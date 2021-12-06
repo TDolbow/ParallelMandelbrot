@@ -48,6 +48,7 @@
         /*write ASCII header to the file*/
         //fprintf(fp,"P6\n %s\n %d\n %d\n %d\n",comment,iXmax,iYmax,MaxColorComponentValue);
         /* compute and write image data bytes to the file*/
+        #pragma acc parallel loop
         for(iY=0;iY<iYmax;iY++)
         {
              Cy=CyMin + iY*PixelHeight;
