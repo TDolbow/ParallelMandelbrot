@@ -6,6 +6,44 @@ This parallelized code was tested with different configurations on the Bridges2 
 
 The mandelbrot set is known to be "embarrassingly parallel", which means that every task can be completed independently from one another, making it a good candidate to be parallelized. <br />
 
+
+# Setup
+
+All of the code used in this repository was tested using NVHPC on the Bridges 2 supercomputer. Because of this, the provided bash scripts may not work on on other systems. <br />
+
+### Loading the NVHPC Module on Bridges 2
+The NVHPC module must be loaded on Bridges 2 to compile the code. To load this module, the module load NVHPC/21.7 command can be used. <br />
+
+
+
+
+### Compiling Code
+To compile code, the following commands can be used: 
+  - ```nvc mandelbrot.c -o mandelbrot --- For serial compilation```
+  - ```nvc -acc -gpu=cc70 -Minfo=accel openACCMandelbrot.c -o openACCMandelbrotGPU --- For OpenACC on GPU```
+  - ```nvc -acc -ta=multicore -Minfo=accel openACCMandelbrot.c -o openACCMandelbrot --- For OpenACC on CPU```
+  - ```nvc -mp -Minfo=accel openMPMandelbrot.c -o openMPMandelbrot --- For OpenMP on CPU```
+
+### Running Compiled Programs on Bridges 2
+Compiled programs can not be run directly on Bridges 2, and need to be submitted to the Bridges 2 scheduler to be run. This can be done by creating a bash file that follows the following format: 
+```
+  #! /bin/bash
+  #SBATCH -A see200002p # specify the project or allocation number
+  #SBATCH -p GPU-shared
+  #SBATCH --gpus=v100-32:1
+  #SBATCH -J myjob
+  #SBATCH --mail-user= EmailHere
+  #SBATCH --mail-type=ALL
+  
+  #SBATCH -N 1 #The number of nodes, not cores (16 cores per node)
+  #SBATCH -n 16 #The number of cores requested in total. 
+  #SBATCH -t 00:30:00 #Set the maximum runtime to 30 minutes
+    Any commands to run go here
+```
+To submit the batch file to the scheduler, type the command ```sbatch nameOfScript```<br />
+
+The total number of cores can be set by modifying the ```#SBATCH -n 16``` command to the desired number of cores. If this number is greater than 16, the ```#SBATCH -N 1``` command will need to be modified to accomondate the desired number of cores. For every 16 cores, 1 should be added to the number in this command.  
+
 # Serial Runtime
 ![unnamed](https://user-images.githubusercontent.com/54713482/145094837-16bcdd60-35f7-4c13-9275-9a41b5289ef0.png)
 
