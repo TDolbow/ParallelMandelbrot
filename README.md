@@ -89,5 +89,18 @@ The code parallelized with with openMP was tested in 2,4,8, and 16 core configur
 <br />This graph shows the performance of the OpenACC program as more cores are added. The lower the time, the better the performance.<br /> 
 ![unnamed (10)](https://user-images.githubusercontent.com/54713482/145095596-e4a1b755-50f2-40ec-a3b5-e31c7e76e7da.png)
 
+# OpenACC GPU Runtime
+![unnamed (11)](https://user-images.githubusercontent.com/54713482/145099865-af8600eb-81cb-4799-bbb7-c39b7eb83005.png)
+
+<br /> Only one GPU  was tested, but as shown by the NSIGHT Compute graph below, there is performnace left on the table. <br />
+![unnamed (12)](https://user-images.githubusercontent.com/54713482/145100087-9a881e7c-3551-44e8-b672-2e5b2ea7e27e.png)
+
+# Parallelization Comparison
+![unnamed (13)](https://user-images.githubusercontent.com/54713482/145100184-20b19262-d2e3-43e0-8699-d2a9bd8b8cc8.png)
+<br />
+
+
+
+
 
 
